@@ -1,0 +1,19 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "A react weather app using the OpenWeather API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evlawless/weather-app.git"
+  },
+  "author": "evan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evlawless/weather-app/issues"
+  },
+  "homepage": "https://github.com/evlawless/weather-app#readme"
+}
