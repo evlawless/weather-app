@@ -1,14 +1,24 @@
 import React from 'react';
-import {hot} from "react-hot-loader";
+import {openweathermap_key} from './keys';
 
 class Weather extends React.Component {
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			currentWeatherJSON: ""
+		};
+
+
+	}
+
 	render() {
 		return (
 			<div>
-				<h1>69</h1>
+				
 			</div>
 		);
 	}
 }
 
-export default hot(module)(Weather);
+export default Weather;
