@@ -1,2 +1,2 @@
 # weather-app
-A react weather app using the OpenWeather API
+A react weather app using the Yahoo Weather API
