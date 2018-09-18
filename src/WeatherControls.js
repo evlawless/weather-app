@@ -20,15 +20,13 @@ class WeatherControls extends React.Component {
 	render() {
 
 		return (
-			<div>
-				<div>
-					<select value={this.props.currentUnits} onChange={this.handleUnitsChanged}>
+			<div className="row">
+				<div className="col-xs-12 col-md-3">
+					<input id="location-input" className="form-control mb-3" type="text" value={this.props.location} onChange={this.handleLocationChanged} />
+					<select className="form-control" value={this.props.currentUnits} onChange={this.handleUnitsChanged}>
 						<option value="C">Celsius</option>
 						<option value="F">Fahrenheit</option>
 					</select>
-				</div>
-				<div>
-					<input type="text" value={this.props.location} onChange={this.handleLocationChanged} />
 				</div>
 			</div>
 		);
