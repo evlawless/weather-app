@@ -3,9 +3,12 @@ import React from 'react';
 class ForecastDay extends React.Component {
 	
 	render() {
+
+		let tempMsg = this.props.temp !== undefined ? this.props.temp + String.fromCharCode(176) + this.props.tempUnits : "~";
+
 		return (
 			<div>
-				<h1>{this.props.temp}&deg;</h1>
+				<h1>{tempMsg}</h1>
 			</div>
 		);
 	}
