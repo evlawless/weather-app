@@ -12,14 +12,15 @@ class ForecastDay extends React.Component {
 		};
 
 		return (
-			<div className="forecast-day container">
-				<p className="forecast-date">{this.props.date}</p>
+			<div className="forecast-day">
+				<div className="forecast-day-of-week">{this.props.weekDay}</div>
+				<div className="forecast-date">{this.props.date}</div>
 				<div className="forecast-temp">
-					<h1>{tempMsg}</h1>
+					{tempMsg}
 				</div>
 				<div className="forecast-weather-type">
 					{/* <img src={this.props.iconSrc} height="32" /> */}
-					<p>{this.props.weatherType}</p>
+					<div>{this.props.weatherType}</div>
 				</div>
 			</div>
 		);

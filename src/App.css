@@ -2,27 +2,3 @@
 	margin: 1rem;
 	font-family: Arial, Helvetica, sans-serif;
 }
-
-.weather-app,
-.weather-app * {
-	background: rgba(120, 120, 255, 0.1);
-}
-
-.forecast-date {
-	margin: 0;
-}
-
-.forecast-date {
-	border-bottom: 1px solid lightgray;
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
-
-.forecast-day {
-	border: 1px solid black;
-	margin: 10px;
-}
-
-.forecast-five-day .forecast-day {
-	height: 165px;
-}

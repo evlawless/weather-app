@@ -1,12 +1,16 @@
-import React from 'react';
+import React from "react";
 
 class WeatherControls extends React.Component {
-
 	constructor(props) {
 		super(props);
 
+		this.state = {
+			location: ""
+		};
+
 		this.handleUnitsChanged = this.handleUnitsChanged.bind(this);
 		this.handleLocationChanged = this.handleLocationChanged.bind(this);
+		this.handleLocationSearch = this.handleLocationSearch.bind(this);
 	}
 
 	handleUnitsChanged(event) {
@@ -14,16 +18,45 @@ class WeatherControls extends React.Component {
 	}
 
 	handleLocationChanged(event) {
-		this.props.onLocationChanged(event.target.value);
+		this.setState({
+			location: event.target.value
+		});
+	}
+
+	handleLocationSearch(event) {
+		this.props.onLocationChanged(this.state.location);
+		event.preventDefault();
 	}
 
 	render() {
-
 		return (
 			<div className="row">
 				<div className="col-xs-12 col-md-3">
-					<input id="location-input" className="form-control mb-3" type="text" value={this.props.location} onChange={this.handleLocationChanged} />
-					<select className="form-control" value={this.props.currentUnits} onChange={this.handleUnitsChanged}>
+					<form onSubmit={this.handleLocationSearch}>
+						<div className="input-group mb-3">
+							<input
+								placeholder="location"
+								id="location-input"
+								className="form-control"
+								type="text"
+								value={this.state.location}
+								onChange={this.handleLocationChanged}
+							/>
+							<div className="input-group-append">
+								<input
+									type="submit"
+									value="search"
+									className="btn input-group-btn"
+								/>
+							</div>
+						</div>
+					</form>
+
+					<select
+						className="form-control"
+						value={this.props.currentUnits}
+						onChange={this.handleUnitsChanged}
+					>
 						<option value="C">Celsius</option>
 						<option value="F">Fahrenheit</option>
 					</select>
