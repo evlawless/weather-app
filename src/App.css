@@ -2,3 +2,31 @@
 	margin: 1rem;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+.forecast-day {
+	background: linear-gradient(to top, lightskyblue, #fffbfb);
+	border: 2px solid lightblue;
+	border-radius: 5px;
+
+	padding: 10px;
+	max-width: 200px;
+	height: 100%
+}
+
+.forecast-date-outer {
+	border-bottom: 1px solid black;
+	margin-bottom: 10px;
+}
+
+.forecast-day-of-week {
+	font-size: 1.1rem;
+}
+
+.forecast-date {
+	font-size: 0.8rem;
+}
+
+.forecast-temp {
+	font-size: 2rem;
+	font-weight: bold;
+}

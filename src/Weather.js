@@ -12,7 +12,7 @@ class Weather extends React.Component {
 			location: "London, ON",
 			currentWeatherIconSrc: "",
 			forecast: [],
-			searchResults: ['']
+			searchResults: []
 		};
 		this.handleUnitsChanged = this.handleUnitsChanged.bind(this);
 		this.handleLocationChanged = this.handleLocationChanged.bind(this);
@@ -21,6 +21,14 @@ class Weather extends React.Component {
 
 	componentDidMount() {
 		this.updateTemp();
+		let self = this;
+		this.updateInterval = window.setInterval(function () {
+			self.updateTemp();
+		}, 60000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.updateInterval);
 	}
 
 	updateTemp() {
@@ -62,9 +70,7 @@ class Weather extends React.Component {
 				accepts: "application/json",
 
 				success: function (data) {
-					// console.log(data);
 					if (data.query.count > 0) {
-						// console.log(data.query);
 						let results = data.query.results.place.map((value, idx) => {
 							return value.name + (value.admin1 != null ? ', ' + value.admin1.content : '');
 						});
@@ -91,8 +97,7 @@ class Weather extends React.Component {
 		this.setState({
 			location: value,
 			searchResults: []
-		});
-		this.updateTemp();
+		}, this.updateTemp);
 	}
 
 	render() {
@@ -135,7 +140,7 @@ class Weather extends React.Component {
 				</div>
 				<div className="forecast-today">
 					<ForecastDay
-						date="today"
+						weekDay="today"
 						temp={convertedTemp}
 						tempUnits={this.state.tempUnits}
 						weatherType={this.state.currentWeather.text}

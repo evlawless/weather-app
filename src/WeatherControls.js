@@ -58,6 +58,7 @@ class WeatherControls extends React.Component {
 			);
 		});
 
+
 		return (
 			<div className="row">
 				<div className="col-xs-12 col-md-3">
@@ -80,7 +81,7 @@ class WeatherControls extends React.Component {
 							</div>
 						</div>
 						<div className="search-results list-group">
-							{searchResults}
+							{searchResults && searchResults}
 						</div>
 					</form>
 				</div>
