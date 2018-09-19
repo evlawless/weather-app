@@ -35,11 +35,18 @@ class WeatherControls extends React.Component {
 
 	handleSearchResultSelected(event) {
 		this.props.onSearchResultSelected(event.target.value);
+		this.setState({
+			location: ''
+		});
 	}
 
 	render() {
 
-		let searchResults = this.props.searchResults.map((value, idx) => {
+		let searchResultsNoDuplicate = this.props.searchResults.filter((value, idx, self)=>{
+			return self.indexOf(value) === idx;
+		})
+
+		let searchResults = searchResultsNoDuplicate.map((value, idx) => {
 			return (
 				<button className="list-group-item list-group-item-action"
 					onClick={this.handleSearchResultSelected}

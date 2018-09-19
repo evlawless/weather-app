@@ -63,14 +63,10 @@ class Weather extends React.Component {
 
 				success: function (data) {
 					// console.log(data);
-					if (data.query.count === 1) {
-						self.setState({
-							location: location
-						});
-						self.updateTemp();
-					} else if (data.query.count > 1) {
+					if (data.query.count > 0) {
+						// console.log(data.query);
 						let results = data.query.results.place.map((value, idx) => {
-							return value.name + ', ' + value.admin1.content;
+							return value.name + (value.admin1 != null ? ', ' + value.admin1.content : '');
 						});
 
 						results.sort((a, b) => {
@@ -157,7 +153,6 @@ class Weather extends React.Component {
 
 				<div>
 					<WeatherControls
-						location={this.state.loc2}
 						currentUnits={this.state.tempUnits}
 						onUnitsChanged={this.handleUnitsChanged}
 						onLocationChanged={this.handleLocationChanged}
