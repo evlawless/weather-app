@@ -68,16 +68,13 @@ class Weather extends React.Component {
 							location: location
 						});
 						self.updateTemp();
-					} else if(data.query.count > 1) {
+					} else if (data.query.count > 1) {
 						let results = data.query.results.place.map((value, idx) => {
 							return value.name + ', ' + value.admin1.content;
 						});
 
-						results.sort((a, b)=>{
-							// console.log(location)
-							// console.log( b + ":" + similarity(b, location));
-							// console.log( a + ":" + similarity(a, location));
-							return similarity(b.toLowerCase(), location.toLowerCase()) - similarity(a.toLowerCase(), location.toLowerCase());
+						results.sort((a, b) => {
+							return similar_text(b.toLowerCase(), location.toLowerCase()) - similar_text(a.toLowerCase(), location.toLowerCase());
 						});
 
 						self.setState({
@@ -205,48 +202,52 @@ function fToK(deg) {
 	return cToK(fToC(parseFloat(deg)));
 }
 
-// FROM https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
-// THANKS
+function similar_text(first, second) {
+	// Calculates the similarity between two strings  
+	// discuss at: http://phpjs.org/functions/similar_text
 
-export function similarity(s1, s2) {
-	var longer = s1;
-	var shorter = s2;
-	if (s1.length < s2.length) {
-		longer = s2;
-		shorter = s1;
+	if (first === null || second === null || typeof first === 'undefined' || typeof second === 'undefined') {
+		return 0;
 	}
-	var longerLength = longer.length;
-	if (longerLength == 0) {
-		return 1.0;
-	}
-	return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
-}
 
-function editDistance(s1, s2) {
-	s1 = s1.toLowerCase();
-	s2 = s2.toLowerCase();
+	first += '';
+	second += '';
 
-	var costs = new Array();
-	for (var i = 0; i <= s1.length; i++) {
-		var lastValue = i;
-		for (var j = 0; j <= s2.length; j++) {
-			if (i == 0)
-				costs[j] = j;
-			else {
-				if (j > 0) {
-					var newValue = costs[j - 1];
-					if (s1.charAt(i - 1) != s2.charAt(j - 1))
-						newValue = Math.min(Math.min(newValue, lastValue),
-							costs[j]) + 1;
-					costs[j - 1] = lastValue;
-					lastValue = newValue;
-				}
+	var pos1 = 0,
+		pos2 = 0,
+		max = 0,
+		firstLength = first.length,
+		secondLength = second.length,
+		p, q, l, sum;
+
+	max = 0;
+
+	for (p = 0; p < firstLength; p++) {
+		for (q = 0; q < secondLength; q++) {
+			for (l = 0;
+				(p + l < firstLength) && (q + l < secondLength) && (first.charAt(p + l) === second.charAt(q + l)); l++);
+			if (l > max) {
+				max = l;
+				pos1 = p;
+				pos2 = q;
 			}
 		}
-		if (i > 0)
-			costs[s2.length] = lastValue;
 	}
-	return costs[s2.length];
+
+	sum = max;
+
+	if (sum) {
+		if (pos1 && pos2) {
+			sum += similar_text(first.substr(0, pos2), second.substr(0, pos2));
+		}
+
+		if ((pos1 + max < firstLength) && (pos2 + max < secondLength)) {
+			sum += similar_text(first.substr(pos1 + max, firstLength - pos1 - max), second.substr(pos2 + max, secondLength - pos2 - max));
+		}
+	}
+
+	return sum;
 }
+
 
 export default Weather;
