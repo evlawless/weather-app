@@ -11,6 +11,7 @@ class WeatherControls extends React.Component {
 		this.handleUnitsChanged = this.handleUnitsChanged.bind(this);
 		this.handleLocationChanged = this.handleLocationChanged.bind(this);
 		this.handleLocationSearch = this.handleLocationSearch.bind(this);
+		this.handleSearchResultSelected = this.handleSearchResultSelected.bind(this);
 	}
 
 	handleUnitsChanged(event) {
@@ -21,6 +22,10 @@ class WeatherControls extends React.Component {
 		this.setState({
 			location: event.target.value
 		});
+
+		if(event.target.value.length > 1) {
+			this.props.onLocationChanged(event.target.value);
+		}
 	}
 
 	handleLocationSearch(event) {
@@ -28,7 +33,24 @@ class WeatherControls extends React.Component {
 		event.preventDefault();
 	}
 
+	handleSearchResultSelected(event) {
+		this.props.onSearchResultSelected(event.target.value);
+	}
+
 	render() {
+
+		let searchResults = this.props.searchResults.map((value, idx) => {
+			return (
+				<button className="list-group-item list-group-item-action"
+					onClick={this.handleSearchResultSelected}
+					key={value}
+					value={value}
+				>
+					{value}
+				</button>
+			);
+		});
+
 		return (
 			<div className="row">
 				<div className="col-xs-12 col-md-3">
@@ -50,8 +72,12 @@ class WeatherControls extends React.Component {
 								/>
 							</div>
 						</div>
+						<div className="search-results list-group">
+							{searchResults}
+						</div>
 					</form>
-
+				</div>
+				<div className="col-xs-12 col-md-3">
 					<select
 						className="form-control"
 						value={this.props.currentUnits}
